@@ -27,4 +27,5 @@ public class TagEntity {
 
     @ManyToMany(mappedBy = "tags")
     private List<ArticleEntity> articles;
+
 }

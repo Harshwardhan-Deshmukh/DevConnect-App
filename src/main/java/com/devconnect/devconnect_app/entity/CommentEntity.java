@@ -1,6 +1,5 @@
 package com.devconnect.devconnect_app.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,11 +24,9 @@ public class CommentEntity {
 
     @ManyToOne
     @JoinColumn(name = "question_id", referencedColumnName = "id")
-    @JsonIgnore
     private QuestionEntity parentQuestion;
 
     @ManyToOne
     @JoinColumn(name = "article_id", referencedColumnName = "id")
-    @JsonIgnore
     private ArticleEntity parentArticle;
 }
