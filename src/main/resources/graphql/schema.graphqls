@@ -1,0 +1,163 @@
+# --- Types for Entity ---
+
+type Article {
+    id: ID!
+    title: String
+    content: String
+
+    author: User
+    tags: [Tag]
+    comments: [Comment]
+}
+
+type User {
+    id: ID!
+    name: String
+    email: String
+    bio: String
+
+    comments: [Comment]
+    articles: [Article]
+    questions: [Question]
+
+    followers: [User]
+    following: [User]
+}
+
+type Tag {
+    id: ID!
+    name: String
+
+    questions: [Question]
+    articles: [Article]
+}
+
+type Comment {
+    id: ID!
+    content: String
+
+    author: User
+    parentQuestion: Question
+    parentArticle: Article
+}
+
+type Question {
+    id: ID!
+    title: String
+    content: String
+
+    author: User
+    comments: [Comment]
+    tags: [Tag]
+}
+
+# --- Inputs for Mutations ---
+
+input CreateUserInput {
+    name: String!
+    email: String!
+    bio: String
+}
+
+input CreateArticleInput {
+    title: String!
+    content: String!
+    authorId: ID!
+    tagIds: [ID!]!
+}
+
+input CreateQuestionInput {
+    title: String!
+    content: String!
+    authorId: ID!
+    tagIds: [ID!]!
+}
+
+input CreateCommentInput {
+    content: String!
+    authorId: ID!
+    parentQuestionId: ID
+    parentArticleId: ID
+}
+
+input CreateTagInput {
+    name: String!
+}
+
+input UpdateQuestionInput {
+    id: ID!
+    title: String
+    content: String
+    tagIds: [ID!]
+}
+
+input UpdateUserInput {
+    id: ID!
+    name: String
+    email: String
+    bio: String
+}
+
+input UpdateArticleInput {
+    id: ID!
+    title: String
+    content: String
+    tagIds: [ID!]
+}
+
+input UpdateCommentInput {
+    id: ID!
+    content: String
+}
+
+input UpdateTagInput {
+    id: ID!
+    name: String
+}
+
+# --- Query Root ---
+
+type Query {
+    getUser(id: ID!): User
+    getAllUsers: [User!]!
+
+    getArticle(id: ID!): Article
+    getAllArticles: [Article!]!
+
+    getQuestion(id: ID!): Question
+    getAllQuestions: [Question!]!
+
+    getComment(id: ID!): Comment
+    getAllComments: [Comment!]!
+
+    getTag(id: ID!): Tag
+    getAllTags: [Tag!]!
+}
+
+# --- Mutation Root ---
+
+type Mutation {
+    # Create
+    createUser(input: CreateUserInput!): User!
+    createArticle(input: CreateArticleInput!): Article!
+    createQuestion(input: CreateQuestionInput!): Question!
+    createComment(input: CreateCommentInput!): Comment!
+    createTag(input: CreateTagInput!): Tag!
+
+    # Update
+    updateUser(input: UpdateUserInput!): User!
+    updateArticle(input: UpdateArticleInput!): Article!
+    updateQuestion(input: UpdateQuestionInput!): Question!
+    updateComment(input: UpdateCommentInput!): Comment!
+    updateTag(input: UpdateTagInput!): Tag!
+
+    # Delete
+    deleteUser(id: ID!): Boolean!
+    deleteArticle(id: ID!): Boolean!
+    deleteQuestion(id: ID!): Boolean!
+    deleteComment(id: ID!): Boolean!
+    deleteTag(id: ID!): Boolean!
+
+    followUser(followerId: ID!, followingId: ID!): Boolean!
+    unfollowUser(followerId: ID!, followingId: ID!): Boolean!
+}
