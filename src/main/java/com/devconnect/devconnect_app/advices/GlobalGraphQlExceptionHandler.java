@@ -14,4 +14,11 @@ public class GlobalGraphQlExceptionHandler {
                 .message(exception.getMessage())
                 .build();
     }
+
+    @GraphQlExceptionHandler(RuntimeException.class)
+    public GraphQLError handleRuntimeException(RuntimeException exception) {
+        return GraphQLError.newError()
+                .message(exception.getMessage())
+                .build();
+    }
 }
